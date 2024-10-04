@@ -1,5 +1,6 @@
 package Pages;
 
+import Model.BrowserSetup;
 import Model.MainPage;
 import Model.StellarBurgersClient;
 import Model.Users;
@@ -29,6 +30,7 @@ public class UserLoginInTheRegistrationFormTest {
     static MainPage mainPage;
     private String accessToken;
     private final boolean isValid;
+    private final BrowserSetup browserSetup = new BrowserSetup();
 
     private final String email;
     private final String password;
@@ -56,14 +58,7 @@ public class UserLoginInTheRegistrationFormTest {
     //запуск браузера
     @Before
     public void setUp() {
-        ChromeOptions options = new ChromeOptions();
-        if (browserType.equals("chrome")) {
-            System.setProperty("webdriver.chrome.driver", "C://CDriver/chromedriver.exe");
-            driver = new ChromeDriver();
-        } else if (browserType.equals("yandex")) {
-            System.setProperty("webdriver.chrome.driver", "C://CDriver/yandexdriver.exe");
-            driver = new ChromeDriver(options); // Запускаем ChromeDriver с параметрами Яндекс
-        }
+        driver = browserSetup.initializeBrowser(browserType);
 
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         mainPage = new MainPage(driver);

@@ -1,8 +1,6 @@
 package Pages;
 
-import Model.MainPage;
-import Model.StellarBurgersClient;
-import Model.Users;
+import Model.*;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import io.restassured.response.ValidatableResponse;
@@ -25,6 +23,7 @@ import static org.junit.Assert.assertTrue;
 @RunWith(Parameterized.class)
 public class IngredientSectionSwitchingTest {
     private final StellarBurgersClient model = new StellarBurgersClient();
+    private final BrowserSetup browserSetup = new BrowserSetup();
     private WebDriver driver;
     static MainPage mainPage;
     private String accessToken;
@@ -37,23 +36,13 @@ public class IngredientSectionSwitchingTest {
 
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
-        return Arrays.asList(new Object[][]{
-                {"chrome"},
-                {"yandex"},
-        });
+        return TestDataProvider.getBrowserTypes();
     }
 
     //запуск браузера
     @Before
     public void setUp() {
-        ChromeOptions options = new ChromeOptions();
-        if (browserType.equals("chrome")) {
-            System.setProperty("webdriver.chrome.driver", "C://CDriver/chromedriver.exe");
-            driver = new ChromeDriver();
-        } else if (browserType.equals("yandex")) {
-            System.setProperty("webdriver.chrome.driver", "C://CDriver/yandexdriver.exe");
-            driver = new ChromeDriver(options); // Запускаем ChromeDriver с параметрами Яндекс
-        }
+        driver = browserSetup.initializeBrowser(browserType);
 
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         mainPage = new MainPage(driver);
