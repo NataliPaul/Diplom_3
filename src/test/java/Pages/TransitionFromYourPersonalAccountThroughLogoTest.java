@@ -11,11 +11,9 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
+
 
 import java.time.Duration;
-import java.util.Arrays;
 import java.util.Collection;
 
 import static org.hamcrest.CoreMatchers.is;
